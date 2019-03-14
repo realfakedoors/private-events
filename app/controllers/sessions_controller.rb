@@ -12,4 +12,8 @@ class SessionsController < ApplicationController
       redirect_to new_user_path
     end
   end
+  
+  def destroy
+    log_out if logged_in?
+  end
 end

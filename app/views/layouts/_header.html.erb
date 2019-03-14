@@ -1,0 +1,12 @@
+<header>
+  <div>
+    <ul>
+      <% if logged_in? %>
+        <li><h2><%= User.find_by(id: session[:user_id]).name %></h2></li>
+        <li><%= link_to "Log out", logout_path, method: :delete %>
+      <% else %>
+        <li><%= link_to "Log in" , login_path,  method: :get %>
+      <% end %>
+    </ul>
+  </div>
+</header>
