@@ -1,7 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+rick:
+  name: Rick
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+morty:
+  name: Morty

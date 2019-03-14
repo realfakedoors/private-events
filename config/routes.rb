@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root 'sessions/new'
+  root 'sessions#new'
   
   get  '/login',         to: 'sessions#new'
   post '/login',         to: 'sessions#create'
@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   get  '/signup',        to: 'users#new'
   post '/signup',        to: 'users#create'
   
-  resources :users,    only: [:show]
+  resources :users,    only: [:show, :new, :create]
   
 end
