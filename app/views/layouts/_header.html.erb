@@ -1,10 +1,10 @@
 <header>
   <div>
     <% if logged_in? %>
-      <% user = User.find_by(id: session[:user_id]) %>
+      <% user = current_user %>
       
       <h2><%= user.name %></h2>
-      <span><%= link_to "My profile", user %></span>
+      <span><%= link_to "Profile", user %></span>
       <span><%= link_to "Events" %></span>
       <span><%= link_to "Invitations" %></span>
       <span><%= link_to "Log out", logout_path, method: :delete %></span>
