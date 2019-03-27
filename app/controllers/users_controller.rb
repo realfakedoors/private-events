@@ -16,6 +16,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
+  def destroy
+    User.find(params[:id]).destroy
+  end
+  
   private
   
     def user_params

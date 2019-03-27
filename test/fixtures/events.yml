@@ -1,11 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+swapmeet:
+  name: Swap Meet
+  location: 30th and Chesterton
+  datetime: 2019-03-14 18:30:26
+  host: rick
 
-one:
-  name: MyString
-  location: MyString
-  time: 2019-03-14 18:30:26
-
-two:
-  name: MyString
-  location: MyString
-  time: 2019-03-14 18:30:26
+brickcity:
+  name: Brick City
+  location: Newark, NJ
+  datetime: 2019-03-14 18:30:26
+  host: morty
