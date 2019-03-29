@@ -10,6 +10,11 @@ module SessionsHelper
     true if current_user
   end
   
+  # Logs in as a specific user.
+  def log_in_as(user)
+    session[:user_id] = user.id
+  end    
+  
   # Logs a user out.
   def log_out
     session.delete(:user_id)

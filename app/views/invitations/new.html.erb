@@ -1,0 +1,14 @@
+<h1>Invite people to your event!</h1>
+
+<%= form_for @invitation do |f| %>
+
+  <div>
+    <%= f.label :guests %>
+    <%= f.text_field :guest_id %>
+  </div>
+  
+  <%= f.hidden_field :attended_event_id %>
+  
+  <%= f.submit "Send Invites!" %>
+  
+<% end %>

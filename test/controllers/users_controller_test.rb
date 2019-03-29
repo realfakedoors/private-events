@@ -15,5 +15,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get user_url(@user)
     assert_response :success
   end
+  
+  test "should delete a user properly on destroy" do
+    @user.save
+    
+    assert_difference "User.count", -1 do
+      @user.destroy
+    end
+    
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get user_path(@user)
+    end
+  end
 
 end

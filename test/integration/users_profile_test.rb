@@ -7,7 +7,7 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   
   test 'display links in header bar' do
     get login_path
-    post login_path, params: { session: { name: @user.name } }
+    post login_path, params: { name: @user.name }
     assert_redirected_to @user
     follow_redirect!
     

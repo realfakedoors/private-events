@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  
+  before_action only: [:destroy] do
+    correct_user?(params[:id])
+  end
+  
   def new
     @user = User.new
   end

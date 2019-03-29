@@ -17,6 +17,7 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "a deleted user's hosted events should be destroyed" do
+    @user.save
     @event.save
     assert_difference 'Event.count', -1 do
       @user.destroy

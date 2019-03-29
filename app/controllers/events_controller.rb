@@ -1,5 +1,9 @@
 class EventsController < ApplicationController
   
+  before_action only: [:edit, :update, :destroy] do
+    correct_user?(params[:host_id])
+  end
+  
   def new
     @event = Event.new
   end
@@ -16,6 +20,19 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
+  end
+  
+  def edit
+  end
+  
+  def update
+    @event = Event.find(params[:id])
+    if @event.update_attributes(event_params)
+      flash[:success] = "Event updated!"
+      redirect_to @event
+    else
+      render 'edit'
+    end
   end
   
   def index
