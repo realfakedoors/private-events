@@ -1,7 +1,5 @@
 class Event < ApplicationRecord
   
-  attr_accessor :host_id
-  
   belongs_to :host, class_name: 'User'
   
   has_many :guests,      through: :invitations, source: :recipient

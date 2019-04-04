@@ -5,3 +5,7 @@
 </div>
 
 <p><%= @event.datetime %></p>
+
+<% if @event.host == current_user %>
+  <%= link_to "Invite people to your event!", new_invitation_path(event: {attended_event_id: @event.id}) %>
+<% end %>

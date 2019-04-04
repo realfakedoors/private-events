@@ -10,6 +10,11 @@ class EventsController < ApplicationController
   
   def create
     @event = Event.new(event_params)
+    
+    if current_user
+      @event.write_attribute(:host_id, current_user.id)
+    end
+    
     if @event.save
       redirect_to @event
     else

@@ -3,13 +3,13 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = User.find_by(name: params[:name])
+    user = User.find_by(name: params[:session][:name])
     if user
-      session[:user_id] = user.id
-      redirect_to user_path(user.id)
+      log_in_as(user)
+      redirect_to dashboard_path
     else
-      flash[:warning] = "Invalid user name!"
-      redirect_to login_path
+      flash.now[:warning] = "Invalid user name!"
+      render 'new'
     end
   end
   

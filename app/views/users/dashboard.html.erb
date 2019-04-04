@@ -1,0 +1,39 @@
+<h1>User Dashboard</h1>
+
+<div>
+  <h3><%= link_to "Create a new event!", new_event_path %></h3>
+</div>
+
+<h3>My Hosted Events</h3>
+<div>
+  <% if @user.events.any? %>
+    <table>
+      <% @user.events.each do |event| %>
+        <tr>
+          <td><%= link_to event.name, event_path(event) %></td>
+          <td><%= event.location %></td>
+          <td><%= event.datetime %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>
+
+<h3>Invites Received</h3>
+<div>
+  <% if @user.invitations.any? %>
+    <table>
+      <% @user.invitations.each do |inv| %>
+      <tr>
+        <% if inv.attended_event_id %>
+          <% event = Event.find(inv.attended_event_id) %>
+          <% host = User.find(event.host_id) %>
+          
+          <td><%= link_to event.name, event_path(event) %></td>
+          <td>Invited by <%= link_to host.name, user_path(host) %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </table>
+  <% end %>  
+</div>

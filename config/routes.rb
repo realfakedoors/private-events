@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   
   get  '/signup',        to: 'users#new'
   post '/signup',        to: 'users#create'
+  get  '/dashboard',     to: 'users#dashboard'
   
   resources :events
   resources :users,       only: [:new, :create, :show, :destroy]

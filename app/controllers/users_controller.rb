@@ -25,6 +25,14 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
   end
   
+  def dashboard
+    if logged_in?
+      @user = current_user
+    else
+      redirect_to login_url
+    end
+  end
+  
   private
   
     def user_params

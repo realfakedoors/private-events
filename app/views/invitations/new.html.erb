@@ -4,10 +4,10 @@
 
   <div>
     <%= f.label :guests %>
-    <%= f.text_field :guest_id %>
+    <%= f.text_field :guest_ids %>
   </div>
   
-  <%= f.hidden_field :attended_event_id %>
+  <%= f.hidden_field :attended_event_id, value: "#{params[:event][:attended_event_id]}" %>
   
   <%= f.submit "Send Invites!" %>
   

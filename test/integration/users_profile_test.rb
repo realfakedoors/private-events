@@ -7,15 +7,15 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   
   test 'display links in header bar' do
     get login_path
-    post login_path, params: { name: @user.name }
-    assert_redirected_to @user
+    log_in_as(@user)
+    assert_redirected_to dashboard_path
     follow_redirect!
     
-    assert_template 'users/show'
+    assert_template 'users/dashboard'
     assert_select 'a[href=?]', login_path, count: 0
     assert_select 'a[href=?]', user_path(@user)
-    assert_select 'a',         "Events"
-    assert_select 'a',         "Invitations"
+    assert_select 'a',         "Profile"
+    assert_select 'a',         "Dashboard"
     assert_select 'a[href=?]', logout_path
   end
   

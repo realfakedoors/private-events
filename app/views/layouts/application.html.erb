@@ -11,11 +11,12 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <div>
+    <div class="container">
       <% flash.each do |message_type, message| %>
         <h2 style="color:red"><%= content_tag(:div, message) %></h2>
       <% end %>
+      <%= yield %>
+      <%= debug(params) if Rails.env.development? %>
     </div>
-    <%= yield %>
   </body>
 </html>
