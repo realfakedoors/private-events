@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   post '/signup',        to: 'users#create'
   get  '/dashboard',     to: 'users#dashboard'
   
+  post '/accept',        to: 'invitations#accept'
+  post '/decline',       to: 'invitations#decline'
+  
   resources :events
   resources :users,       only: [:new, :create, :show, :destroy]
   resources :invitations, only: [:new, :create]

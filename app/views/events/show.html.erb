@@ -6,6 +6,20 @@
 
 <p><%= @event.datetime %></p>
 
+<strong>Confirmed Guests:</strong>
+
+<% if @event.guest_list %>
+  <ul>
+  <% guest_list = @event.guest_list.split(",").map{|g| g.strip} %>
+  <% guest_list.map!{|listing| User.find(listing.to_i)} %>
+  <% guest_list.each do |g| %>
+    <li>
+      <%= g.name %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
 <% if @event.host == current_user %>
   <%= link_to "Invite people to your event!", new_invitation_path(event: {attended_event_id: @event.id}) %>
 <% end %>

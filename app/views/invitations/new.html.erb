@@ -4,7 +4,7 @@
 
   <div>
     <%= f.label :guests %>
-    <%= f.text_field :guest_ids %>
+    <%= f.collection_check_boxes :guest_ids, User.all, :id, :name %>
   </div>
   
   <%= f.hidden_field :attended_event_id, value: "#{params[:event][:attended_event_id]}" %>
