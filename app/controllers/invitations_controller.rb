@@ -1,6 +1,7 @@
 class InvitationsController < ApplicationController
   
   include InvitationsHelper
+  include EventsHelper
   
   before_action only: [:create] do
     correct_user?(event_host)
@@ -16,12 +17,11 @@ class InvitationsController < ApplicationController
   
   def create
     event_id = invitation_params[:attended_event_id]
-    guests = invitation_params[:guest_ids].split(",").map!{|x| x.strip}
+    guests = invitation_params[:guest_id]
     
     guests.reject! { |g| g.empty? }
     
     invitations = guests.map do |guest_id|
-      guest_id.strip!
       Invitation.new(attended_event_id: event_id, guest_id: guest_id)
     end
     
@@ -39,10 +39,10 @@ class InvitationsController < ApplicationController
     event = Event.find(params[:event])
     guest = User.find(params[:guest])
       
-    if event.guest_list && !guest_already_attending?(guest, event)
-      event.update_attribute(:guest_list, event.guest_list + ", #{guest.id}")
-    else
-      event.update_attribute(:guest_list, "#{guest.id}")
+    if guest_list(event) && !guest_already_attending?(guest, event)
+      Invitation.where(attended_event_id: event.id, guest_id: guest.id).find_each do |inv|
+        inv.update(accepted: true)
+      end
     end
     
     flash[:success] = "Invitation accepted!"
@@ -50,9 +50,7 @@ class InvitationsController < ApplicationController
   end
   
   def decline
-    Invitation.where(attended_event_id: params[:event], guest_id: params[:guest]).find_each do |inv|
-      inv.destroy!
-    end
+    Invitation.where(attended_event_id: params[:event], guest_id: params[:guest]).destroy_all
     
     flash.now[:success] = "Invitation declined!"
     render 'users/dashboard'
@@ -61,7 +59,7 @@ class InvitationsController < ApplicationController
   private
   
     def invitation_params
-      params.require(:invitation).permit(:attended_event_id, :guest_ids)
+      params.require(:invitation).permit(:attended_event_id, :guest_id => [])
     end
     
     def event_host

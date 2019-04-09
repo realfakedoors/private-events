@@ -8,11 +8,9 @@
 
 <strong>Confirmed Guests:</strong>
 
-<% if @event.guest_list %>
+<% if guests_attending?(@event) %>
   <ul>
-  <% guest_list = @event.guest_list.split(",").map{|g| g.strip} %>
-  <% guest_list.map!{|listing| User.find(listing.to_i)} %>
-  <% guest_list.each do |g| %>
+  <% guest_list(@event).each do |g| %>
     <li>
       <%= g.name %>
     </li>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_04_024409) do
+ActiveRecord::Schema.define(version: 2019_04_09_104808) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2019_04_04_024409) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "host_id"
-    t.text "guest_list"
     t.index ["host_id"], name: "index_events_on_host_id"
   end
 
@@ -28,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_04_04_024409) do
     t.datetime "updated_at", null: false
     t.integer "attended_event_id"
     t.integer "guest_id"
-    t.string "guest_ids"
+    t.boolean "accepted", default: false
     t.index ["attended_event_id"], name: "index_invitations_on_attended_event_id"
     t.index ["guest_id"], name: "index_invitations_on_guest_id"
   end

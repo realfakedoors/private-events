@@ -23,18 +23,15 @@
 <div>
   <% if @user.invitations.any? %>
     <table>
-      <% @user.invitations.each do |inv| %>
+      <% @user.invitations.where(accepted: false).each do |inv| %>
       <tr>
-        <% if inv.attended_event_id %>
-          <% event = Event.find(inv.attended_event_id) %>
-          <% next if guest_already_attending?(@user, event) %>
-          <% host = User.find(event.host_id) %>
-          
-          <td><%= link_to event.name, event_path(event) %></td>
-          <td>Invited by <%= link_to host.name, user_path(host) %></td>
-          <td><%= link_to  "Accept", accept_path(event: event, guest: @user.id), method: :post %></td>
-          <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
-        <% end %>
+        <% event = Event.find(inv.attended_event_id) %>
+        <% host = User.find(event.host_id) %>
+        
+        <td><%= link_to event.name, event_path(event) %></td>
+        <td>Invited by <%= link_to host.name, user_path(host) %></td>
+        <td><%= link_to  "Accept", accept_path(event: event, guest: @user.id), method: :post %></td>
+        <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
       </tr>
       <% end %>
     </table>

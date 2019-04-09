@@ -10,7 +10,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
   test "should create new invitations for each guest" do
     log_in_as(@user)
     assert_difference 'Invitation.count', 3 do
-      post invitations_url, params: { invitation: { attended_event_id: @event.id, guest_ids: "1, 2, 3" } }
+      post invitations_url, params: { invitation: { attended_event_id: @event.id, guest_id: [1, 2, 3] } }
     end
   end      
   
