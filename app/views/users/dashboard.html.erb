@@ -4,36 +4,40 @@
   <h3><%= link_to "Create a new event!", new_event_path %></h3>
 </div>
 
-<h3>My Hosted Events</h3>
+
 <div>
   <% if @user.events.any? %>
     <table>
-      <% @user.events.each do |event| %>
-        <tr>
-          <td><%= link_to event.name, event_path(event) %></td>
-          <td><%= event.location %></td>
-          <td><%= event.datetime %></td>
-        </tr>
-      <% end %>
+      <h1>My Hosted Events</h1>
+      <h2>Past</h2>
+      <%= render partial: 'hosted_events', locals: {timescope: @user.events.past} %>
+      <h2>Future</h2>
+      <%= render partial: 'hosted_events', locals: {timescope: @user.events.future} %>
     </table>
   <% end %>
 </div>
 
-<h3>Invites Received</h3>
 <div>
   <% if @user.invitations.any? %>
     <table>
+      <h3>Invites Received</h3>
       <% @user.invitations.where(accepted: false).each do |inv| %>
-      <tr>
-        <% event = Event.find(inv.attended_event_id) %>
-        <% host = User.find(event.host_id) %>
-        
-        <td><%= link_to event.name, event_path(event) %></td>
-        <td>Invited by <%= link_to host.name, user_path(host) %></td>
-        <td><%= link_to  "Accept", accept_path(event: event, guest: @user.id), method: :post %></td>
-        <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
-      </tr>
+        <tr>
+          <%= render partial: 'display_invites', locals: {event_id: inv.attended_event_id} %>
+          <td><%= link_to  "Accept",  accept_path(event: event, guest: @user.id), method: :post %></td>
+          <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
+        </tr>
+      <% end %>
+      <h3>Events I'm Attending</h3>
+      <% @user.invitations.where(accepted: true).each do |inv| %>
+        <tr>
+          <% event_id = inv.attended_event_id %>
+          <%= render partial: 'display_invites', locals: {event_id: event_id} %>
+          <% if Event.future.find_by(id: event_id) %>
+            <td><%= link_to "Cancel", decline_path(event: event, guest: @user.id), method: :post %></td>
+          <% end %>
+        </tr>
       <% end %>
     </table>
-  <% end %>  
+  <% end %>
 </div>

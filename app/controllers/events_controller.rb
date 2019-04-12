@@ -1,7 +1,9 @@
 class EventsController < ApplicationController
   
+  include EventsHelper
+  
   before_action only: [:edit, :update, :destroy] do
-    correct_user?(params[:host_id])
+    correct_user?(Event.find_by(params[:id]).host_id)
   end
   
   def new
@@ -16,6 +18,7 @@ class EventsController < ApplicationController
     end
     
     if @event.save
+      add_host(current_user, @event)
       redirect_to @event
     else
       flash[:failed] = "Event failed to save!"
@@ -46,6 +49,7 @@ class EventsController < ApplicationController
   
   def destroy
     Event.find(params[:id]).destroy
+    redirect_to dashboard_path
   end
   
   private

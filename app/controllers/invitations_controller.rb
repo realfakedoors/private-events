@@ -53,7 +53,7 @@ class InvitationsController < ApplicationController
     Invitation.where(attended_event_id: params[:event], guest_id: params[:guest]).destroy_all
     
     flash.now[:success] = "Invitation declined!"
-    render 'users/dashboard'
+    redirect_to dashboard_path
   end
   
   private

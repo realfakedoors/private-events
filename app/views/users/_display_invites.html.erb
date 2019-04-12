@@ -1,0 +1,5 @@
+<% event = Event.find(event_id) %>
+<% host = User.find(event.host_id) %>
+          
+<td><%= link_to event.name, event_path(event) %></td>
+<td>Invited by <%= link_to host.name, user_path(host) %></td>

@@ -1,5 +1,8 @@
 class Event < ApplicationRecord
   
+  scope :past,   -> { where("datetime <= ?", DateTime.now) }
+  scope :future, -> { where("datetime >  ?", DateTime.now) }
+  
   belongs_to :host, class_name: 'User'
   
   has_many :guests,      through: :invitations
