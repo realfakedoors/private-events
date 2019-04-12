@@ -17,12 +17,19 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
   
-  test "should get edit" do
+  test "should get edit when logged in" do
+    log_in_as(@user)
     get edit_event_url(@event)
     assert_response :success
   end
   
-  test "should create an event with proper parameters" do
+  test "should redirect when attempting to edit and not logged in" do
+    get edit_event_url(@event)
+    assert_redirected_to root_url
+  end
+  
+  test "a logged-in user should be able to create an event with proper parameters" do
+    log_in_as(@user)
     assert_difference "Event.count", 1 do
       post events_url, params: { event: { name: "Trap Trap Trap", location: "Atlanta, GA", datetime: DateTime.now, host_id: 1 } }
     end

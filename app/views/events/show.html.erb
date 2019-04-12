@@ -18,5 +18,6 @@
 
 <% if @event.host == current_user %>
   <%= link_to "Invite people to your event!", new_invitation_path(event: {attended_event_id: @event.id}) %>
+  <%= link_to "Edit your event.", edit_event_path(@event) %>
   <%= link_to "Cancel your event.", @event, method: :delete %>
 <% end %>

@@ -1,7 +1,9 @@
 class Event < ApplicationRecord
   
+  default_scope { order(datetime: :asc) }
+  
   scope :past,   -> { where("datetime <= ?", DateTime.now) }
-  scope :future, -> { where("datetime >  ?", DateTime.now) }
+  scope :future, -> { where("datetime > ?", DateTime.now) }
   
   belongs_to :host, class_name: 'User'
   

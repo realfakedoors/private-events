@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   include EventsHelper
   
   before_action only: [:edit, :update, :destroy] do
-    correct_user?(Event.find_by(params[:id]).host_id)
+    correct_user?(Event.find(params[:id]).host.id)
   end
   
   def new
@@ -31,6 +31,7 @@ class EventsController < ApplicationController
   end
   
   def edit
+    @event = Event.find(params[:id])
   end
   
   def update

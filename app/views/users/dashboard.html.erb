@@ -7,20 +7,23 @@
 
 <div>
   <% if @user.events.any? %>
-    <table>
-      <h1>My Hosted Events</h1>
-      <h2>Past</h2>
-      <%= render partial: 'hosted_events', locals: {timescope: @user.events.past} %>
-      <h2>Future</h2>
-      <%= render partial: 'hosted_events', locals: {timescope: @user.events.future} %>
-    </table>
+    <div>
+      <table>
+        <h2>My Past Events</h2>
+        <%= render partial: 'event', collection: @user.events.past %>
+      </table>
+      <table>
+        <h2>My Upcoming Events</h2>
+        <%= render partial: 'event', collection: @user.events.future %>
+      </table>
+    </div>
   <% end %>
 </div>
 
 <div>
   <% if @user.invitations.any? %>
     <table>
-      <h3>Invites Received</h3>
+      <h2>Invites Received</h2>
       <% @user.invitations.where(accepted: false).each do |inv| %>
         <tr>
           <%= render partial: 'display_invites', locals: {event_id: inv.attended_event_id} %>
@@ -28,7 +31,7 @@
           <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
         </tr>
       <% end %>
-      <h3>Events I'm Attending</h3>
+      <h2>Events I'm Attending</h2>
       <% @user.invitations.where(accepted: true).each do |inv| %>
         <tr>
           <% event_id = inv.attended_event_id %>
