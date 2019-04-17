@@ -4,11 +4,11 @@ class UserTest < ActiveSupport::TestCase
   
   def setup
     @user = users(:rick)
-    @event = events(:swapmeet)
+    @event = events(:swapmeet) # hosted by rick
   end
   
-  test "should be valid" do
-    assert @user.valid?
+  test "should be valid with the right parameters" do
+    assert User.new(name: "Brooks Koepka").valid?
   end
   
   test "name shouldn't be blank" do
@@ -17,9 +17,7 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "a deleted user's hosted events should be destroyed" do
-    @user.save
-    @event.save
-    assert_difference 'Event.count', -1 do
+    assert_difference 'Event.count', -3 do
       @user.destroy
     end
   end

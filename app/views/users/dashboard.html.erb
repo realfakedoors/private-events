@@ -27,8 +27,8 @@
       <% @user.invitations.where(accepted: false).each do |inv| %>
         <tr>
           <%= render partial: 'display_invites', locals: {event_id: inv.attended_event_id} %>
-          <td><%= link_to  "Accept",  accept_path(event: event, guest: @user.id), method: :post %></td>
-          <td><%= link_to "Decline", decline_path(event: event, guest: @user.id), method: :post %></td>
+          <td><%= link_to  "Accept",  accept_path(event: inv.event, guest: @user.id), method: :post %></td>
+          <td><%= link_to "Decline", decline_path(event: inv.event, guest: @user.id), method: :post %></td>
         </tr>
       <% end %>
       <h2>Events I'm Attending</h2>
@@ -37,7 +37,7 @@
           <% event_id = inv.attended_event_id %>
           <%= render partial: 'display_invites', locals: {event_id: event_id} %>
           <% if Event.future.find_by(id: event_id) %>
-            <td><%= link_to "Cancel", decline_path(event: event, guest: @user.id), method: :post %></td>
+            <td><%= link_to "Cancel", decline_path(event: event_id, guest: @user.id), method: :post %></td>
           <% end %>
         </tr>
       <% end %>

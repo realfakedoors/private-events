@@ -18,6 +18,7 @@ class EventsController < ApplicationController
     end
     
     if @event.save
+      #adds the host to the event's guest list.
       add_host(current_user, @event)
       redirect_to @event
     else

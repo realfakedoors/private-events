@@ -3,10 +3,12 @@ class InvitationsController < ApplicationController
   include InvitationsHelper
   include EventsHelper
   
+  # ensures only the event's host can send invitations.
   before_action only: [:create] do
     correct_user?(event_host)
   end
   
+  # and that only the proper guest can accept or decline them.
   before_action only: [:accept, :decline] do
     correct_user?(event_guest)
   end
@@ -41,7 +43,7 @@ class InvitationsController < ApplicationController
       
     if guest_list(event) && !guest_already_attending?(guest, event)
       Invitation.where(attended_event_id: event.id, guest_id: guest.id).find_each do |inv|
-        inv.update(accepted: true)
+        inv.update_attribute(:accepted, true)
       end
     end
     

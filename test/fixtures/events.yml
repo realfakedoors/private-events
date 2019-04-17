@@ -1,11 +1,23 @@
 swapmeet:
-  name: Swap Meet
+  name: swapmeet
   location: 30th and Chesterton
   datetime: 2019-03-14 18:30:26
   host: rick
 
 brickcity:
-  name: Brick City
+  name: brickcity
   location: Newark, NJ
   datetime: 2019-03-14 18:30:26
   host: morty
+  
+dinoextinction:
+  name: dinoextinction
+  location: Pangaea
+  datetime: -65000000-04-20 16:20:00
+  host: rick
+
+jetsoncars:
+  name: jetsoncars
+  location: Future Earth
+  datetime: 2100-08-22 22:30:25
+  host: rick

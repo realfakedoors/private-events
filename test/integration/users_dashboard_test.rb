@@ -1,13 +1,12 @@
 require 'test_helper'
 
-class UsersProfileTest < ActionDispatch::IntegrationTest
+class UsersDashboardTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:morty)
+    log_in_as(@user)
   end
   
   test 'display links in header bar' do
-    get login_path
-    log_in_as(@user)
     assert_redirected_to dashboard_path
     follow_redirect!
     
@@ -16,17 +15,16 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', user_path(@user)
     assert_select 'a',         "Profile"
     assert_select 'a',         "Dashboard"
+    assert_select 'a',         "All Events"
     assert_select 'a[href=?]', logout_path
   end
   
-  test 'only display login link if not logged in' do
-    get user_path(@user)
+  test 'display invites received, past and upcoming events' do
+    follow_redirect!
     
-    assert_select 'a[href=?]', login_path
-    
-    assert_select 'a[href=?]', user_path(@user), count: 0
-    assert_select 'a[href=?]', logout_path,      count: 0    
-    assert_select 'a', {count: 0, text: "Events"}
-    assert_select 'a', {count: 0, text: "Invitations"}    
+    assert_select 'h2', "My Past Events"
+    assert_select 'h2', "My Upcoming Events"
+    assert_select 'h2', "Invites Received"
+    assert_select 'h2', "Events I'm Attending"
   end
 end
